@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:dio/dio.dart';
-import 'package:reunionou_mobileapp/main.dart';
-import '../user.dart';
+
+import '../models/user.dart';
 
 class UsersMaster extends StatefulWidget {
+  const UsersMaster({super.key});
+
   @override
-  _UsersMasterState createState() => _UsersMasterState();
+  State<UsersMaster> createState() => _UsersMasterState();
 }
 
-class userProfile extends State<UserProfile>{
-  List<User> _users = [];
+class _UsersMasterState extends State<UsersMaster>{
+  final List<User> _users = [];
 
   @override
   void initState() {
