@@ -3,19 +3,21 @@ import 'package:flutter/material.dart';
 class User {
   final int id;
   final String name;
-  final String firstname;
+  final String? firstname;
   final String email;
-  final String password;
-  final String status;
+  final String? password;
+  final String? status;
+  final String? refresh_token;
   
 
   const User({
     required this.id,
     required this.name,
-    required this.firstname,
+    this.firstname,
     required this.email,
-    required this.password,
-    required this.status,
+    this.password,
+    this.status,
+    this.refresh_token,
   });
 
   factory User.fromJson(Map<String, dynamic> json) {
@@ -25,7 +27,8 @@ class User {
     firstname :  json['firstname'],
     email :   json['email'],
     password:   json['password'],
-     status :  json['status'],
+    status :  json['status'],
+    refresh_token :  json['refresh_token'],
     );
   }
 }

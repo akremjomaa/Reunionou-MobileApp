@@ -12,6 +12,7 @@ class UsersMaster extends StatefulWidget {
 
 class _UsersMasterState extends State<UsersMaster>{
   final List<User> _users = [];
+  Dio dio = new Dio();
 
   @override
   void initState() {
@@ -19,14 +20,18 @@ class _UsersMasterState extends State<UsersMaster>{
     _fetchUsers();
   }
 
-  final dio = Dio();
   Future<void> _fetchUsers() async {
     try {
-      var response = await dio.get('https://api.reunionou.local:19043/users/');
+      dio.options.headers['Access-Control-Allow-Credentials'] = true;
+      dio.options.headers['Access-Control-Allow-Headers'] = "Origin,Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token";
+      dio.options.headers['Access-Control-Allow-Methods'] = "GET, POST, OPTIONS";
+      var response = await dio.get('https://3270-77-132-56-139.eu.ngrok.io/users');
       if (response.statusCode == 200 || response.statusCode == 304) {
         var getUsersData = response.data['data'];
+        print(getUsersData);
 
-        for (var element in getUsersData) {
+        // _users.addAll(getUsersData.map((element) => User.fromJson(element)));
+        for(var element in getUsersData){
           User user = User.fromJson(element);
           _users.add(user);
         }
@@ -34,7 +39,7 @@ class _UsersMasterState extends State<UsersMaster>{
         throw Exception('Failed to load users');
       }
     } catch (e) {
-      // Handle errors here
+      print(e.toString());
       throw Exception('Failed to fetch users');
     }
   }
@@ -49,22 +54,23 @@ class _UsersMasterState extends State<UsersMaster>{
       body: FutureBuilder(
         future: _fetchUsers(),
         builder: (context, snapshot) {
-            if (snapshot.hasData) {
-              return ListView.builder(
-                itemCount: _users.length,
-                itemBuilder: (context, index) {
-                  return ListTile(
-
-                    );
-                },
-              );
-            } else if (snapshot.hasError) {
-              return Text('${snapshot.error}');
-            }
+          if (snapshot.connectionState == ConnectionState.done) {
+            // Show the data in _fetchUsers
+            return ListView.builder(
+              itemCount: _users.length,
+              itemBuilder: (context, index) {
+                return ListTile(
+                  title: Text(_users[index].name),
+                  subtitle: Text(_users[index].email),
+                );
+              },
+            );
+          } else {
             // Show loading indicator
             return CircularProgressIndicator();
-          },
-        )
+          }
+        },
+      )
     );
   }
 }

@@ -6,7 +6,7 @@ class Event {
   final String description;
   final String lieu;
   final String date;
-  final String status;
+  final String? status;
   final User creator;
 
 
@@ -16,7 +16,7 @@ class Event {
     required this.description,
     required this.lieu,
     required this.date,
-    required this.status,
+    this.status,
     required this.creator
   });
 

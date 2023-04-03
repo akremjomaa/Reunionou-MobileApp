@@ -1,49 +1,32 @@
 import 'package:flutter/material.dart';
+import './data/screens/user_screen.dart';
+import './data/screens/home.dart';
 
-void main() => runApp(const MyApp());
+void main() => runApp(const Reunionou());
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class Reunionou extends StatelessWidget {
+  const Reunionou({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: MyHomePage(title: 'Reunionou Mobile App '),
-    );
-  }
-}
-
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({required this.title});
-
-  final String title;
-
-  @override
-  _MyHomePageState createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
-      body: Center(
-        child: UserProfile(),
-      ),
-    );
-  }
-}
-
-class UserProfile extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      child: Text('User Profile'),
+      title: 'Reunionou Mobile App',
+      theme: ThemeData(fontFamily: 'Oswald'),
+      initialRoute: Home.route, // Setting the initial route to the home page
+      routes: {
+        Home.route: (context) => const Home(),
+        // Other routes here
+      },
+      onUnknownRoute: (settings) {
+        // Handle unknown routes
+        return MaterialPageRoute(
+          builder: (context) => const Scaffold(
+            body: Center(
+              child: Text('Page not found'),
+            ),
+          ),
+        );
+      },
     );
   }
 }
