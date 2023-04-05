@@ -8,14 +8,13 @@ import 'home.dart';
 class EventScreen extends StatefulWidget {
   const EventScreen({Key? key, required this.title}) : super(key: key);
   final String title;
-  static String get route => '/EventScreen';
 
   @override
   State<EventScreen> createState() => _EventScreenState();
 }
 
 class _EventScreenState extends State<EventScreen> {
-  late Future<List<Event>> _events;
+  Future<List<Event>>? _events;
 
   @override
   void initState() {
@@ -35,9 +34,7 @@ class _EventScreenState extends State<EventScreen> {
     } else {
       throw Exception('Failed to load events');
     }
-}
-
-
+  }
 
   @override
   Widget build(BuildContext context) {
