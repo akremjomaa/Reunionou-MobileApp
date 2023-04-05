@@ -15,7 +15,7 @@ class Reunionou extends StatelessWidget {
       initialRoute: Home.route, // Setting the initial route to the home page
       routes: {
         Home.route: (context) => const Home(),
-        // Other routes here
+        // Other routes to be added later
       },
       onUnknownRoute: (settings) {
         // Handle unknown routes

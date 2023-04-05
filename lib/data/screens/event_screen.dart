@@ -1,5 +1,5 @@
 import 'dart:convert';
-
+import 'package:http/http.dart' as http;
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import '../models/event.dart';
@@ -20,19 +20,24 @@ class _EventScreenState extends State<EventScreen> {
   @override
   void initState() {
     super.initState();
-    _events = fetchEvents();
+    getEvents();
   }
 
-  Future<List<Event>> fetchEvents() async {
-    final dio = Dio();
-    dio.options.headers['Access-Control-Allow-Credentials'] = true;
-    dio.options.headers['Access-Control-Allow-Headers'] = "Origin,Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token";
-    dio.options.headers['Access-Control-Allow-Methods'] = "GET, POST, OPTIONS";
-    final response = await dio.get('https://3270-77-132-56-139.eu.ngrok.io/events');
-    return response.statusCode == 200
-        ? response.data.map((eventJson) => Event.fromJson(eventJson)).toList()
-        : throw Exception('Failed to fetch events');
-  }
+  Future<void> getEvents() async {
+    final response = await http.get(Uri.parse('https://api.reunionou.local:19043/events/'));
+    if (response.statusCode == 200) {
+      final events = jsonDecode(response.body)
+        .map<Event>((eventJson) => Event.fromJson(eventJson))
+        .toList();
+      setState(() {
+        _events = Future.value(events);
+      });
+    } else {
+      throw Exception('Failed to load events');
+    }
+}
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -57,7 +62,8 @@ class _EventScreenState extends State<EventScreen> {
                       Center(
                         child: Text(
                           event.title,
-                          style: TextStyle(fontSize: 19, fontWeight: FontWeight.bold),
+                          style: TextStyle(
+                              fontSize: 19, fontWeight: FontWeight.bold),
                           textAlign: TextAlign.center,
                         ),
                       ),
@@ -66,7 +72,7 @@ class _EventScreenState extends State<EventScreen> {
                         style: TextStyle(fontSize: 17),
                       ),
                       Text(
-                        'Lieu: ${event.lieu}',
+                        'Lieu: ${event.place}',
                         style: TextStyle(fontSize: 17),
                       ),
                       SizedBox(height: 12),

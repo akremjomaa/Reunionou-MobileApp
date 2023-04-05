@@ -20,6 +20,18 @@ class User {
     this.refresh_token,
   });
 
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'name': name,
+      'firstname': firstname,
+      'email': email,
+      'password': password,
+      'status': status,
+      'refresh_token': refresh_token,
+    };
+  }
+
   factory User.fromJson(Map<String, dynamic> json) {
     return User(
     id : json['id'],

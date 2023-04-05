@@ -13,7 +13,6 @@ class Home extends StatelessWidget {
         length: 3,
         child: Scaffold(
             appBar: AppBar(
-              leading: Container(),
               title: const Text(
                 'Reunionou Mobile App',
                 style: TextStyle(color: Colors.black),
@@ -43,9 +42,11 @@ class Home extends StatelessWidget {
             body: TabBarView(children: [
               EventScreen(title: 'Event details'), 
               EventCreation(),
-              ProfileScreen()
+              UserProfile(id: '1')
             ])
         )
     );
   }
 }
+
+

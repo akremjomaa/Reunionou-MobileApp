@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:latlong2/latlong.dart';
+import 'package:flutter_map/flutter_map.dart';
 import '../models/event.dart';
 import '../models/user.dart';
-import 'dart:convert';
 
 class EventCreation extends StatefulWidget {
   const EventCreation({Key? key}) : super(key: key);
@@ -19,6 +19,12 @@ class _EventCreationState extends State<EventCreation> {
   final TextEditingController _creatorEmailController = TextEditingController();
   LatLng? _location;
 
+  void _onLocationSelected(LatLng location) {
+    setState(() {
+      _location = location;
+    });
+  }
+
   Future<void> _createEvent() async {
     final creator = User(
       id: 0, // L'ID sera généré automatiquement par le serveur
@@ -27,26 +33,29 @@ class _EventCreationState extends State<EventCreation> {
     );
 
     final newEvent = Event(
-      id: 0, // L'ID sera généré automatiquement par le serveur
+      id: 0,
       title: _titleController.text,
       description: _descriptionController.text,
-      lieu: _location?.toString() ?? '',
+      place: _location?.toString() ?? '',
       date: _dateController.text,
       creator: creator,
     );
 
-    // Envoi de la requête POST au serveur pour créer le nouvel événement
-    // Code à ajouter ici
-
-    Navigator.pop(context); // Retour à l'écran précédent après la création de l'événement
+// Creating a new event by sending a POST request to the server
+  try {
+    await newEvent.create();
+  } catch (e) {
+    if (mounted) { // Vérifie si le widget est monté
+      showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: Text('Error'),
+          content: Text(e.toString()),
+        ),
+      );
+    }
   }
 
-  void _onMapCreated(GoogleMapController controller) {}
-
-  void _onLocationSelected(LatLng location) {
-    setState(() {
-      _location = location;
-    });
   }
 
   @override
@@ -84,25 +93,37 @@ class _EventCreationState extends State<EventCreation> {
             SizedBox(height: 32),
             Container(
               height: 200,
-              child: GoogleMap(
-                onMapCreated: _onMapCreated,
-                onTap: _onLocationSelected,
-                initialCameraPosition: CameraPosition(
-                  target: LatLng(48.8566, 2.3522), // Paris, France
+              child: FlutterMap(
+                options: MapOptions(
+                  center: LatLng(48.8566, 2.3522), // Paris, France
                   zoom: 11,
+                  onTap: (tapPosition, location) => _onLocationSelected(location),
                 ),
-                markers: _location != null ? {
-                  Marker(
-                    markerId: MarkerId('location'),
-                    position: _location!,
-                  )
-                } : {},
+                children: [
+                  TileLayer(
+                    urlTemplate:
+                      "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", 
+                    subdomains: ['a', 'b', 'c'],
+                  ),
+                  MarkerLayer(
+                    markers: _location != null ? [
+                      Marker(
+                        point: _location!,
+                        builder: (ctx) => Icon(Icons.location_pin),
+                        
+                      )
+                    ] : [],
+                  ),
+                ],
               ),
             ),
             SizedBox(height: 32),
             ElevatedButton(
               child: Text('Create Event'),
-              onPressed: _createEvent,
+              onPressed: () {
+                _createEvent();
+                // Navigator.pop(context); // Retour à l'écran précédent après la création de l'événement
+              }
             ),
           ],
         ),
