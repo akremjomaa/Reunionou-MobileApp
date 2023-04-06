@@ -1,16 +1,31 @@
-# Reunionou_Mobileapp
+# Reunionou-MobileApp (Atelier n°2)
 
-A new Flutter project.
+*Projet réalisé du 27 mars au 5 avril 2023*
 
-## Getting Started
+## Récupérer le projet 
 
-This project is a starting point for a Flutter application.
+```sh
+git clone git@github.com:akremjomaa/Reunionou-MobileApp.git
+cd Reunionou-MobileApp
+```
 
-A few resources to get you started if this is your first Flutter project:
+## Initialisation
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+### Installation des dépendances
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+```sh
+flutter pub get
+```
+
+### Tester l'appli
+
+```sh
+flutter run
+```
+
+## Collaborateurs
+
+- Akrem JOMAA ([@akremjomaa](https://github.com/akremjomaa))
+- Khaoula BOULHDIR ([@KhaoulaCode](https://github.com/KhaoulaCode))
+- Léo SIX ([@leosix10](https://github.com/leosix10))
+- Waïl ZIDANE ([@WZidane](https://github.com/WZidane))
