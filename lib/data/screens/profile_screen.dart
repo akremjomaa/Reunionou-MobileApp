@@ -20,7 +20,7 @@ class _UserProfileState extends State<UserProfile> {
   }
 
   Future<void> getUser() async {
-    final response = await http.get(Uri.parse('http://docketu.iutnc.univ-lorraine.fr:54280/users/${widget.id}'));
+    final response = await http.get(Uri.parse('https://api.reunionou.local:19043/users/4638/'));
     if (response.statusCode == 200) {
       setState(() {
         member = json.decode(response.body)['user'];

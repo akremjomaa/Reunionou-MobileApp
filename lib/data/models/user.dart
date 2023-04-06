@@ -5,9 +5,8 @@ class User {
   final String name;
   final String? firstname;
   final String email;
-  final String? password;
+  final String password;
   final String? status;
-  final String? refresh_token;
   
 
   const User({
@@ -15,9 +14,8 @@ class User {
     required this.name,
     this.firstname,
     required this.email,
-    this.password,
+    required this.password,
     this.status,
-    this.refresh_token,
   });
 
   Map<String, dynamic> toJson() {
@@ -28,7 +26,6 @@ class User {
       'email': email,
       'password': password,
       'status': status,
-      'refresh_token': refresh_token,
     };
   }
 
@@ -40,7 +37,6 @@ class User {
     email :   json['email'],
     password:   json['password'],
     status :  json['status'],
-    refresh_token :  json['refresh_token'],
     );
   }
 }
