@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import './data/screens/user_screen.dart';
 import './data/screens/home.dart';
 
@@ -11,8 +12,15 @@ class Reunionou extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Reunionou Mobile App',
-      theme: ThemeData(fontFamily: 'Oswald'),
+      theme: ThemeData(
+        primarySwatch: Colors.deepOrange,
+        primaryColor: Colors.deepOrange,
+        textTheme: GoogleFonts.fredokaTextTheme(
+          Theme.of(context).textTheme
+        ),
+      ),
       initialRoute: Home.route, // Setting the initial route to the home page
+      debugShowCheckedModeBanner: false,
       routes: {
         Home.route: (context) => const Home(),
         // Other routes to be added later
