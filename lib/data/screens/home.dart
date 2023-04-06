@@ -12,41 +12,52 @@ class Home extends StatelessWidget {
     return DefaultTabController(
         length: 3,
         child: Scaffold(
-            appBar: AppBar(
-              title: const Text(
-                'Reunionou Mobile App',
-                style: TextStyle(color: Colors.black),
-              ),
-              centerTitle: true,
-              toolbarHeight: 60,
-              backgroundColor: Colors.white,
-              bottom: TabBar(
-                indicatorWeight: 5,
-                labelColor: Colors.black,
-                tabs: [
-                  Tab(
-                    icon: Icon(Icons.event, color: Colors.black),
-                    text: 'Events'
-                  ),
-                  Tab(
-                    icon: Icon(Icons.add, color: Colors.black),
-                    text: 'New event'
-                  ),
-                  Tab(
-                    icon: Icon(Icons.person, color: Colors.black),
-                    text: 'Profile'
-                  ),
-                ],
-              ),
+          appBar: AppBar(
+            title: const Text(
+              'Reunionou Mobile App',
+              style: TextStyle(color: Colors.black),
             ),
-            body: TabBarView(children: [
-              EventScreen(title: 'Event details'), 
-              EventCreation(),
-              UserProfile(id: '1')
-            ])
+            centerTitle: true,
+            toolbarHeight: 40,
+            backgroundColor: Colors.white,
+          ),
+          body: TabBarView(children: [
+            EventScreen(title: 'Event details'),
+            EventCreation(),
+            UserProfile(id: '1')
+          ]),
+          bottomNavigationBar: Container(
+            decoration: BoxDecoration(
+              color: Colors.white,
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.grey.withOpacity(0.5),
+                  spreadRadius: 5,
+                  blurRadius: 7,
+                  offset: const Offset(0, -3),
+                ),
+              ],
+            ),
+            child: TabBar(
+              indicatorWeight: 5,
+              labelColor: Colors.black,
+              tabs: [
+                Tab(
+                  icon: Icon(Icons.event, color: Colors.black),
+                  text: 'Mes évènements',
+                ),
+                Tab(
+                  icon: Icon(Icons.add, color: Colors.black),
+                  text: 'Créer un évènement',
+                ),
+                Tab(
+                  icon: Icon(Icons.person, color: Colors.black),
+                  text: 'Mon compte',
+                ),
+              ],
+            ),
+          ),
         )
     );
   }
 }
-
-

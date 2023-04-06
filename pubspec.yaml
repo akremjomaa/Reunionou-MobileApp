@@ -41,6 +41,7 @@ dependencies:
   google_maps_flutter_web: ^0.4.0+7
   latlng: ^0.2.1
   latlong2: ^0.8.1
+  google_fonts: ^4.0.3
 
 dev_dependencies:
   flutter_test:

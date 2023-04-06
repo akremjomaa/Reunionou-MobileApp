@@ -62,7 +62,7 @@ class _EventCreationState extends State<EventCreation> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Créer de nouveaux événements'),
+        title: Text('Créer un évènement'),
         centerTitle: true,
       ),
       body: SingleChildScrollView(
@@ -73,7 +73,7 @@ class _EventCreationState extends State<EventCreation> {
             TextField(
               controller: _titleController,
               decoration: InputDecoration(
-                labelText: 'Title',
+                labelText: 'Titre',
               ),
             ),
             SizedBox(height: 16),
@@ -119,7 +119,7 @@ class _EventCreationState extends State<EventCreation> {
             ),
             SizedBox(height: 32),
             ElevatedButton(
-              child: Text('Create Event'),
+              child: Text('Créer'),
               onPressed: () {
                 _createEvent();
                 // Navigator.pop(context); // Retour à l'écran précédent après la création de l'événement
